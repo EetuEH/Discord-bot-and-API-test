@@ -3,7 +3,19 @@ import os
 import random
 import json
 
-client = discord.Client()
+if os.path.exists(os.getcwd() + "/config.json"):
+    with open("./config.json") as f:
+        data = json.load(f)
+else:
+    template = {"Token": "", "Prefix": "!"}
+
+    with open(os.getcwd() + "/config.json", "w+") as f:
+        json.dump(template, f)
+
+token = data["Token"]
+prefix = data["Prefix"]
+
+client = discord.Client(intents=discord.Intents.default())
 
 @client.event
 async def on_ready():
@@ -11,4 +23,4 @@ async def on_ready():
 
 
 
-client.run("MTA1MzM2NDI3MDAyMjI4MzM0NA.Gg9k93.ITZqKkxzBPImBqhMydJxxuG4Qi1fZSPIlAxFTw")
+client.run(token)
