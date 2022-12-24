@@ -21,6 +21,22 @@ client = discord.Client(intents=discord.Intents.default())
 async def on_ready():
     print('Sisäänkirjautuminen käyttäjänä {0.user}'.format(client))
 
+@client.event
+async def on_message(message):
+    #varmistetaan, ettei botti reagoi omiin viesteihinsä
+    if message.author == client.user:
+        print("oma viesti")
+        return
 
+    username = str(message.author)
+    user_msg = str(message.content)
+    channel = str(message.channel)
+
+    #lähettää botin viiveen viestinä muodossa "x millisekuntia"
+    if (user_msg[0] == prefix & user_msg[1:] == "ping"):
+            print("viive pyydetty")
+            #muutetaan viive sekunneista millisekunneiksi ja pyöristetään yhden numeron tarkkuudella
+            viive = round(client.latency * 1000, 1)
+            await user_msg.channel.send(f"Pong! {viive}ms")
 
 client.run(token)
