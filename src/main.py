@@ -23,9 +23,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    print(str(message.content))
     #varmistetaan, ettei botti reagoi omiin viesteihinsä
     if message.author == client.user:
-        print("oma viesti")
         return
 
     username = str(message.author)
@@ -37,6 +37,6 @@ async def on_message(message):
             print("viive pyydetty")
             #muutetaan viive sekunneista millisekunneiksi ja pyöristetään yhden numeron tarkkuudella
             viive = round(client.latency * 1000, 1)
-            await user_msg.channel.send(f"Pong! {viive}ms")
+            await message.channel.send(f"Pong! {viive}ms")
 
 client.run(token)
